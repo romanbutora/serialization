@@ -49,9 +49,11 @@ public class DataProducer {
 				}
 			}
 		}
-		watch.split();
+		StopWatch resultWatch = new StopWatch();
+		resultWatch.start();
 		handler.getResults(checker);
-		System.out.println("Time needed to send and receive data: " + watch.getSplitTime() + "ms");
+		resultWatch.split();
+		System.out.println("Time needed to send and receive data: " + resultWatch.getSplitTime() + "ms");
 		checker.checkResults();
 		watch.stop();
 		System.out.println("Total time: " + watch.getTime() + "ms");
