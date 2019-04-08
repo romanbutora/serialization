@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(json)
+project(app)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -17,4 +17,4 @@ link_libraries(${JSONCPP_LIBRARIES})
 SET(USED_LIBS ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_REGEX_LIBRARY})
 
 add_executable(${PROJECT_NAME} "main.cpp" "dataset.cpp" "measurementinfo.cpp" "result.cpp")
-target_link_libraries(json ${JSONCPP_LIBRARIES} ${USED_LIBS})
+target_link_libraries(${PROJECT_NAME} ${JSONCPP_LIBRARIES} ${USED_LIBS})
