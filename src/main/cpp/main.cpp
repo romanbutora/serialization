@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
                 processJSON(stream);
             }else if(protocol == "avro"){
                 processAvro(stream);
-            }else if(protocol == "protobuf"){
+            }else if(protocol == "proto"){
                 processProtobuf(stream);
             }else{
                 throw std::logic_error("Protocol not yet implemented");
