@@ -8,7 +8,7 @@ import cz.esw.serialization.json.DataType;
  */
 public class AvroDataHandler implements DataHandler {
 	@Override
-	public void start() {
+	public void initialize() {
 
 	}
 

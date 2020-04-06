@@ -9,7 +9,7 @@ import cz.esw.serialization.json.DataType;
 public class CapnpDataHandler implements DataHandler {
 
 	@Override
-	public void start() {
+	public void initialize() {
 
 	}
 

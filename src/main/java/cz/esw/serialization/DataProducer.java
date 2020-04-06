@@ -19,7 +19,7 @@ public class DataProducer {
 	private final int datasetSize;
 
 	/**
-	 * @param rnd
+	 * @param rnd pseudorandom generator of the data
 	 * @param numberOfDatasets total number of datasets that will be generated
 	 * @param datasetSize      number of values per value type to be generated
 	 */
@@ -33,8 +33,8 @@ public class DataProducer {
 		StopWatch watch = new StopWatch();
 		ResultChecker checker = new ResultChecker();
 		watch.start();
-		handler.start();
-		checker.start();
+		handler.initialize();
+		checker.initialize();
 		int[] ids = rnd.ints(0, Integer.MAX_VALUE).distinct().limit(numberOfDatasets).toArray();
 		for (int id : ids) {
 			String name = NAMES[rnd.nextInt(NAMES.length)];

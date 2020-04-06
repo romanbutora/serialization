@@ -51,7 +51,7 @@ public class JsonDataHandler implements DataHandler {
 	}
 
 	@Override
-	public void start() {
+	public void initialize() {
 		datasets = new HashMap<>();
 	}
 
@@ -74,9 +74,15 @@ public class JsonDataHandler implements DataHandler {
 
 	@Override
 	public void getResults(ResultConsumer consumer) throws IOException {
+		//convert datasets to JSON and write them to the output stream
 		MAPPER.writeValue(os, datasets.values().toArray());
+
 		os.write(0); //write end
+
+		//parse JSON results from the input stream
 		Result[] results = MAPPER.readValue(is, Result[].class);
+
+
 		for (Result result : results) {
 			MeasurementInfo info = result.getInfo();
 			consumer.acceptMeasurementInfo(info.getId(), info.getTimestamp(), info.getMeasurerName());
