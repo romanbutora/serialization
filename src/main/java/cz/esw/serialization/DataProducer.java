@@ -2,7 +2,7 @@ package cz.esw.serialization;
 
 import cz.esw.serialization.handler.DataHandler;
 import cz.esw.serialization.json.DataType;
-import org.apache.commons.lang.time.StopWatch;
+import org.apache.commons.lang3.time.StopWatch;
 
 import java.io.IOException;
 import java.util.Random;
@@ -62,15 +62,10 @@ public class DataProducer {
 	}
 
 	private double generateValue(DataType dataType) {
-		switch (dataType) {
-			case DOWNLOAD:
-				return rnd.nextInt(90000) + 10000;
-			case UPLOAD:
-				return rnd.nextInt(9000) + 1000;
-			case PING:
-				return rnd.nextInt(1000);
-		}
-		throw new IllegalStateException("Unreachable code.");
+		return switch (dataType) {
+			case DOWNLOAD -> rnd.nextInt(90000) + 10000;
+			case UPLOAD -> rnd.nextInt(9000) + 1000;
+			case PING -> rnd.nextInt(1000);
+		};
 	}
-
 }

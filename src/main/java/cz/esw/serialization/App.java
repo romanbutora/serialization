@@ -36,17 +36,12 @@ public class App {
 		InputStream is = socket.getInputStream();
 		OutputStream os = socket.getOutputStream();
 
-		switch (protocol) {
-			case JSON:
-				return new JsonDataHandler(is, os);
-			case AVRO:
-				return new AvroDataHandler();
-			case PROTO:
-				return new ProtoDataHandler();
-			case CAPNP:
-				return new CapnpDataHandler();
-		}
-		throw new IllegalStateException("Unreachable code");
+		return switch (protocol) {
+			case JSON -> new JsonDataHandler(is, os);
+			case AVRO -> new AvroDataHandler();
+			case PROTO -> new ProtoDataHandler();
+			case CAPNP -> new CapnpDataHandler();
+		};
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -54,6 +49,7 @@ public class App {
 			System.out.println(
 					"Three parameters are required: host, port and protocol used for the transmission. One is " +
 					"optional: number of transmissions");
+			return;
 		}
 
 		String host = args[0];
