@@ -3,10 +3,18 @@ package cz.esw.serialization.handler;
 import cz.esw.serialization.ResultConsumer;
 import cz.esw.serialization.json.DataType;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
  * @author Marek Cuchý (CVUT)
  */
 public class AvroDataHandler implements DataHandler {
+
+	public AvroDataHandler(InputStream is, OutputStream os) {
+
+	}
+
 	@Override
 	public void initialize() {
 

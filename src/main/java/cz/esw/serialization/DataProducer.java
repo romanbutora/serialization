@@ -5,16 +5,16 @@ import cz.esw.serialization.json.DataType;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.io.IOException;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
  * @author Marek Cuchý (CVUT)
  */
 public class DataProducer {
 
-	private static final String[] NAMES = {"honza", "petr", "michal", "jirka"};
+	private static final String[] NAMES = {"kristyna", "petr", "jana", "jirka"};
 
-	private final Random rnd;
+	private final RandomGenerator rnd;
 	private final int numberOfDatasets;
 	private final int datasetSize;
 
@@ -23,7 +23,7 @@ public class DataProducer {
 	 * @param numberOfDatasets total number of datasets that will be generated
 	 * @param datasetSize      number of values per value type to be generated
 	 */
-	public DataProducer(Random rnd, int numberOfDatasets, int datasetSize) {
+	public DataProducer(RandomGenerator rnd, int numberOfDatasets, int datasetSize) {
 		this.rnd = rnd;
 		this.numberOfDatasets = numberOfDatasets;
 		this.datasetSize = datasetSize;
@@ -35,6 +35,21 @@ public class DataProducer {
 		watch.start();
 		handler.initialize();
 		checker.initialize();
+
+		generateData(handler, checker);
+
+		StopWatch resultWatch = new StopWatch();
+		resultWatch.start();
+		handler.getResults(checker);
+		resultWatch.split();
+		System.out.println("Time needed to send and receive data: " + resultWatch.getSplitTime() + "ms");
+		checker.checkResults();
+		watch.stop();
+		System.out.println("Total time: " + watch.getTime() + "ms");
+		System.out.println("Data are correct.");
+	}
+
+	private void generateData(DataHandler handler, ResultChecker checker) {
 		int[] ids = rnd.ints(0, Integer.MAX_VALUE).distinct().limit(numberOfDatasets).toArray();
 		for (int id : ids) {
 			String name = NAMES[rnd.nextInt(NAMES.length)];
@@ -49,16 +64,6 @@ public class DataProducer {
 				}
 			}
 		}
-		StopWatch resultWatch = new StopWatch();
-		resultWatch.start();
-		handler.getResults(checker);
-		resultWatch.split();
-		System.out.println("Time needed to send and receive data: " + resultWatch.getSplitTime() + "ms");
-		checker.checkResults();
-		watch.stop();
-		System.out.println("Total time: " + watch.getTime() + "ms");
-		System.out.println("Data are correct.");
-
 	}
 
 	private double generateValue(DataType dataType) {

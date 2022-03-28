@@ -13,10 +13,7 @@ import cz.esw.serialization.json.Result;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Marek Cuchý (CVUT)
@@ -57,10 +54,10 @@ public class JsonDataHandler implements DataHandler {
 
 	@Override
 	public void handleNewDataset(int datasetId, long timestamp, String measurerName) {
-		Dataset dataset = new Dataset();
-		dataset.setInfo(new MeasurementInfo(datasetId, timestamp, measurerName));
-		dataset.setRecords(new EnumMap<>(DataType.class));
-		datasets.put(datasetId, dataset);
+		MeasurementInfo info = new MeasurementInfo(datasetId, timestamp, measurerName);
+		Map<DataType, List<Double>> recordMap = new EnumMap<>(DataType.class);
+
+		datasets.put(datasetId, new Dataset(info, recordMap));
 	}
 
 	@Override
@@ -85,7 +82,7 @@ public class JsonDataHandler implements DataHandler {
 
 		for (Result result : results) {
 			MeasurementInfo info = result.getInfo();
-			consumer.acceptMeasurementInfo(info.getId(), info.getTimestamp(), info.getMeasurerName());
+			consumer.acceptMeasurementInfo(info.id(), info.timestamp(), info.measurerName());
 			result.getAverages().forEach(consumer::acceptResult);
 		}
 	}

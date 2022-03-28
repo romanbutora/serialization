@@ -7,8 +7,6 @@ import cz.esw.serialization.json.MeasurementInfo;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * @author Marek Cuchý (CVUT)
  */
@@ -35,11 +33,11 @@ public class ResultChecker extends JsonDataHandler implements ResultConsumer {
 			throw new IllegalArgumentException("Unknown dataset " + datasetId);
 		}
 		MeasurementInfo info = currentDataset.getInfo();
-		if (info.getTimestamp() != timestamp) {
-			throw new IllegalArgumentException("Timestamp does not match: expected=" + info.getTimestamp() + ", actual=" + timestamp);
+		if (info.timestamp() != timestamp) {
+			throw new IllegalArgumentException("Timestamp does not match: expected=" + info.timestamp() + ", actual=" + timestamp);
 		}
-		if (!info.getMeasurerName().equals(measurerName)) {
-			throw new IllegalArgumentException("Measurer name does not match: expected=" + info.getMeasurerName() + ", actual=" + measurerName);
+		if (!info.measurerName().equals(measurerName)) {
+			throw new IllegalArgumentException("Measurer name does not match: expected=" + info.measurerName() + ", actual=" + measurerName);
 		}
 	}
 
@@ -50,7 +48,7 @@ public class ResultChecker extends JsonDataHandler implements ResultConsumer {
 			throw new IllegalArgumentException("Unknown, unused or already checked data type: " + type);
 		}
 
-		double expected = values.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+		double expected = values.stream().mapToDouble(Double::doubleValue).average().orElseThrow();
 
 		if (!doubleEquals(expected, result)) {
 			throw new IllegalArgumentException("Result for " + type + " does not match: expected=" + expected + ", actual=" + result);
@@ -68,7 +66,7 @@ public class ResultChecker extends JsonDataHandler implements ResultConsumer {
 	public void checkResults(){
 		checkCurrentDataset();
 		if(!datasets.isEmpty()){
-			throw new IllegalStateException("Some of datasets not checked: " + datasets.values().stream().map(Dataset::getInfo).collect(toList()));
+			throw new IllegalStateException("Some of datasets not checked: " + datasets.values().stream().map(Dataset::getInfo).toList());
 		}
 	}
 

@@ -14,6 +14,11 @@ public class Dataset {
     public Dataset() {
     }
 
+    public Dataset(MeasurementInfo info, Map<DataType, List<Double>> records) {
+        this.info = info;
+        this.records = records;
+    }
+
     public MeasurementInfo getInfo() {
         return info;
     }

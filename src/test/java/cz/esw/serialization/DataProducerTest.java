@@ -29,8 +29,8 @@ class DataProducerTest {
 		public void getResults(ResultConsumer consumer) {
 			for (Dataset dataset : datasets.values()) {
 				MeasurementInfo info = dataset.getInfo();
-				consumer.acceptMeasurementInfo(info.getId(), info.getTimestamp(), info.getMeasurerName());
-				dataset.getRecords().forEach((type, values) -> consumer.acceptResult(type,values.stream().mapToDouble(Double::doubleValue).average().getAsDouble() ));
+				consumer.acceptMeasurementInfo(info.id(), info.timestamp(), info.measurerName());
+				dataset.getRecords().forEach((type, values) -> consumer.acceptResult(type,values.stream().mapToDouble(Double::doubleValue).average().orElseThrow() ));
 			}
 		}
 

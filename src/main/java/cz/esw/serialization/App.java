@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public class App {
 
-	private static final int DEFAULT_NUMBER_OF_TRANSMISSIONS = 1;
+	private static final int DEFAULT_NUMBER_OF_TRANSMISSIONS = 10;
 
 	private static final int SEED = 0;
 	private static final int NUMBER_OF_DATASETS = 100;
@@ -38,17 +38,15 @@ public class App {
 
 		return switch (protocol) {
 			case JSON -> new JsonDataHandler(is, os);
-			case AVRO -> new AvroDataHandler();
-			case PROTO -> new ProtoDataHandler();
-			case CAPNP -> new CapnpDataHandler();
+			case AVRO -> new AvroDataHandler(is, os);
+			case PROTO -> new ProtoDataHandler(is, os);
 		};
 	}
 
 	public static void main(String[] args) throws IOException {
 		if (args.length < 3) {
 			System.out.println(
-					"Three parameters are required: host, port and protocol used for the transmission. One is " +
-					"optional: number of transmissions");
+					"Three parameters are required: host, port and protocol used for the transmission. One is optional: number of transmissions");
 			return;
 		}
 

@@ -1,22 +1,12 @@
 #include <iostream>
 
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <fcntl.h>
-#include <cstring>
-#include <unistd.h>
-
-
 #include <jsoncpp/json/json.h>
 
-
-#include "measurementinfo.h"
 #include "dataset.h"
 #include "result.h"
 
-//#include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 using boost::asio::ip::tcp;
@@ -65,7 +55,7 @@ void processAvro(tcp::iostream& stream){
 }
 
 void processProtobuf(tcp::iostream& stream){
-    throw std::logic_error("TODO: Implement profobuf");
+    throw std::logic_error("TODO: Implement protobuf");
 }
 
 int main(int argc, char *argv[]) {
@@ -75,13 +65,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-
-
     // unsigned short int port = 12345;
     unsigned short int port = atoi(argv[1]);
 
     // std::string protocol = "json";
     std::string protocol(argv[2]);
+    boost::to_upper(protocol);
     try {
         boost::asio::io_service io_service;
 
@@ -89,15 +78,16 @@ int main(int argc, char *argv[]) {
         tcp::acceptor acceptor(io_service, endpoint);
 
         while (true) {
+            cout << "Waiting for message in " + protocol + " format..." << endl;
             tcp::iostream stream;
             boost::system::error_code ec;
             acceptor.accept(*stream.rdbuf(), ec);
 
-            if(protocol == "json"){
+            if(protocol == "JSON"){
                 processJSON(stream);
-            }else if(protocol == "avro"){
+            }else if(protocol == "AVRO"){
                 processAvro(stream);
-            }else if(protocol == "proto"){
+            }else if(protocol == "PROTO"){
                 processProtobuf(stream);
             }else{
                 throw std::logic_error("Protocol not yet implemented");

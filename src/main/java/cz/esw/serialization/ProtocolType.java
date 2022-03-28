@@ -4,10 +4,7 @@ package cz.esw.serialization;
  * @author Marek Cuchý (CVUT)
  */
 public enum ProtocolType {
-	JSON,
-	AVRO,
-	PROTO,
-	CAPNP;
+	JSON, AVRO, PROTO;
 
 	public static ProtocolType parseType(String typeName) {
 		try {
