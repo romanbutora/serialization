@@ -1,11 +1,62 @@
 [
+
     {
       "namespace": "cz.esw.serialization.avro",
       "type": "record",
       "name": "AMeasurementInfo",
       "fields": [
+        {"name": "id", "type": "int"},
+        {"name": "timestamp", "type": "long"},
+        {"name": "measurerName", "type": "string"}
       ]
-    }
-  ]
+    },
+    {
+      "namespace": "cz.esw.serialization.avro",
+      "type": "record",
+      "name": "ADataset",
+      "fields": [
+        {"name": "info", "type": "cz.esw.serialization.avro.AMeasurementInfo"},
+        {"name": "records", "type": {"type": "map", "values": {"type": "array", "items": "double"}}
+        }
+      ]
+    },
+  {
+    "namespace": "cz.esw.serialization.avro",
+    "type": "record",
+    "name": "ADatasets",
+    "fields": [
+      {
+        "name": "datasets",
+        "type": {
+          "type": "array",
+          "items": "cz.esw.serialization.avro.ADataset"
+        }
+      }
+    ]
+  },
+    {
+      "namespace": "cz.esw.serialization.avro",
+      "type": "record",
+      "name": "AResult",
+      "fields": [
+        {"name": "info", "type": "cz.esw.serialization.avro.AMeasurementInfo"},
+        {"name": "averages", "type": {"type": "map", "values": "double"}}
+      ]
+    },
+  {
+    "namespace": "cz.esw.serialization.avro",
+    "type": "record",
+    "name": "AResults",
+    "fields": [
+      {
+        "name": "results",
+        "type": {
+          "type": "array",
+          "items": "cz.esw.serialization.avro.AResult"
+        }
+      }
+    ]
+  }
+ ]
 
 

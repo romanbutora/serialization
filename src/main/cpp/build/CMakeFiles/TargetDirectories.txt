@@ -1,0 +1,3 @@
+/mnt/c/Users/Butora/Desktop/mee/vyska/CVUT/2semester/efektivni_software/labs/lab6/serialization/src/main/cpp/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Butora/Desktop/mee/vyska/CVUT/2semester/efektivni_software/labs/lab6/serialization/src/main/cpp/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Butora/Desktop/mee/vyska/CVUT/2semester/efektivni_software/labs/lab6/serialization/src/main/cpp/build/CMakeFiles/app.dir
