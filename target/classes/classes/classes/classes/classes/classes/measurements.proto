@@ -1,0 +1,29 @@
+syntax = "proto3";
+package esw;
+
+option java_package = "cz.esw.serialization.proto";
+option java_multiple_files = true;
+
+message PMeasurementInfo{
+  int32 id = 1;
+  int64  timestamp = 2;
+  string measurerName = 3;
+}
+
+message Doubles {
+  repeated double value = 1;
+}
+message PDataset {
+  PMeasurementInfo info = 1;
+  map<string, Doubles> records = 2;
+}
+message PDatasets{
+  repeated PDataset pdataset = 1;
+}
+message PResult {
+  PMeasurementInfo info = 1;
+  map<string, double> averages = 2;
+}
+message PResults{
+  repeated PResult results = 1;
+}
